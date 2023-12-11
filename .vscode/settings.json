@@ -14,5 +14,6 @@
       "username": "root",
       "database": "next-prisma"
     }
-  ]
+  ],
+  "editor.formatOnSave": true
 }
