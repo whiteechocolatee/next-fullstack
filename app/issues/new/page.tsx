@@ -13,8 +13,9 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { createIssueSchema } from '@/app/validationSchemas';
 import { z } from 'zod';
+
+import { createIssueSchema } from '@/app/validationSchemas';
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
 
@@ -29,9 +30,20 @@ const NewIssue = () => {
     register,
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }, 
   } = useForm<IssueForm>({
     resolver: zodResolver(createIssueSchema),
+  });
+
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      setIsSubmitting(true);
+      await axios.post('/api/issues', data);
+      router.push('/issues');
+    } catch (error) {
+      setIsSubmitting(false);
+      setError('An unexpected error occurred.');
+    }
   });
 
   return (
@@ -41,18 +53,7 @@ const NewIssue = () => {
           <Callout.Text>{error}</Callout.Text>
         </Callout.Root>
       )}
-      <form
-        className=' space-y-3'
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            setIsSubmitting(true);
-            await axios.post('/api/issues', data);
-            router.push('/issues');
-          } catch (error) {
-            setIsSubmitting(false);
-            setError('An unexpected error occurred.');
-          }
-        })}>
+      <form className=' space-y-3' onSubmit={onSubmit}>
         <TextField.Root>
           <TextField.Input
             placeholder='Title'
