@@ -12,14 +12,12 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-// import SimpleMDE from 'react-simplemde-editor';
 
 import { z } from 'zod';
 
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
 import { createIssueSchema } from '@/app/validationSchemas';
-import delay from 'delay';
 import dynamic from 'next/dynamic';
 
 const SimpleMDE = dynamic(
