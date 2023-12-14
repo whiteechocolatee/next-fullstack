@@ -37,5 +37,4 @@ const IssuePageDetails = async ({ params }: Props) => {
     </div>
   );
 };
-
 export default IssuePageDetails;
